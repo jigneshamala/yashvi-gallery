@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111111"><title>Yashvi Studio | Gallery Manager</title>
+<style>
+:root{--bg:#101010;--panel:#191919;--text:#f7f3ed;--muted:#b7b0a7;--gold:#d9b779;--line:#38332d;--red:#f1a5a5;--green:#a8ddb7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}a{color:var(--gold)}.wrap{max-width:1100px;margin:auto;padding:0 16px}header{padding:20px 0;border-bottom:1px solid var(--line)}.brand{color:var(--gold);font-size:13px;letter-spacing:.2em;font-weight:bold}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:6px}.hidden{display:none!important}main{padding:28px 0 50px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.2em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(32px,6vw,52px);margin:12px 0}h2{font-size:27px;margin:0 0 14px}p{color:var(--muted);line-height:1.65}.panel,.card,.notice{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:17px;margin:15px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:7px;margin:12px 0}label{font-size:12px;color:var(--muted)}input,textarea{width:100%;padding:12px;border:1px solid #51483d;border-radius:4px;background:#101010;color:var(--text);font:inherit}textarea{min-height:75px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border:1px solid var(--gold);border-radius:4px;background:var(--gold);color:#17130d;font-weight:bold;font-size:13px;cursor:pointer;text-decoration:none}.btn.secondary{background:transparent;color:var(--text);border-color:#5b5142}.btn.danger{background:transparent;color:var(--red);border-color:#8c5353}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.muted,.status{font-size:12px;color:var(--muted)}.status{white-space:pre-wrap;margin:10px 0}.error{color:var(--red)}.ok{color:var(--green)}.gallery-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{margin:0;min-width:0}.card h3{font-size:23px;margin:0 0 8px;overflow-wrap:anywhere}.card p{font-size:13px}.url{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.badge{border:1px solid var(--line);border-radius:20px;padding:5px 8px;font-size:10px;color:var(--muted)}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.photo{border:1px solid var(--line);background:var(--panel);min-width:0}.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#222}.photo div{padding:8px;font-size:11px;overflow-wrap:anywhere;color:var(--muted)}footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:12px}.lightbox{position:fixed;inset:0;background:#000e;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.lightbox.open{display:flex}.lightbox img{max-width:100%;max-height:82vh}.lightbox button{position:absolute;top:15px;right:15px}
+@media(max-width:650px){.grid,.gallery-list{grid-template-columns:1fr}.photos{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:13px}.wrap{padding:0 13px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">YASHVI STUDIO<small>PRE-WEDDING · WEDDING · MEMORIES</small></div></div></header>
+<main class="wrap">
+<section id="home" class="hidden"><div class="eyebrow">Client photo delivery</div><h1>Your story, beautifully remembered.</h1><p>Open the personal gallery link provided by Yashvi Studio.</p><div class="notice">Client galleries are not listed publicly. Use the unique link shared by the studio.</div></section>
+<section id="login" class="hidden"><div class="eyebrow">Studio administration</div><h1>Gallery Manager</h1><p>Sign in to create, edit and share client galleries.</p><div class="panel" style="max-width:520px">
+<div class="field"><label for="email">Admin email</label><input id="email" type="email" autocomplete="username" placeholder="you@example.com"></div>
+<div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password"></div>
+<div class="actions"><button class="btn" id="signIn">Sign in</button><button class="btn secondary" id="reset">Reset password</button></div><div class="status" id="loginStatus"></div></div></section>
+<section id="admin" class="hidden">
+<div class="row"><div><div class="eyebrow">Private admin area</div><h1>Gallery Manager</h1><p>Create galleries and copy individual client links.</p></div><button class="btn secondary" id="signOut">Sign out</button></div>
+<div class="panel"><h2 id="formHeading">Create a gallery</h2><form id="form"><input type="hidden" id="recordId">
+<div class="grid"><div class="field"><label for="title">Couple / gallery name *</label><input id="title" required placeholder="Rahul & Priya"></div><div class="field"><label for="slug">Link name *</label><input id="slug" required pattern="[a-z0-9-]+" placeholder="rahul-priya"></div></div>
+<div class="grid"><div class="field"><label for="subtitle">Gallery type</label><input id="subtitle" placeholder="Pre-Wedding Story"></div><div class="field"><label for="shootDate">Shoot date / year</label><input id="shootDate" placeholder="2026"></div></div>
+<div class="field"><label for="folderUrl">Google Drive folder URL *</label><input id="folderUrl" type="url" required placeholder="https://drive.google.com/drive/folders/..."></div>
+<div class="field"><label for="folderId">Google Drive folder ID *</label><input id="folderId" required placeholder="Folder ID (auto-filled from URL)"></div>
+<div class="field"><label for="description">Message for the couple</label><textarea id="description" placeholder="Your pre-wedding memories, gathered in one place."></textarea></div>
+<div class="field"><label><input id="published" type="checkbox" checked style="width:auto"> Published (client link enabled)</label></div>
+<div class="actions"><button class="btn" id="save" type="submit">Save gallery</button><button class="btn secondary" type="button" id="clear">Clear form</button></div><div class="status" id="formStatus"></div></form></div>
+<div class="row"><h2>All galleries</h2><span id="count" class="muted"></span></div><div id="galleryList" class="gallery-list"></div><div id="listStatus" class="status"></div>
+</section>
+<section id="client" class="hidden"><div class="eyebrow" id="clientSubtitle">Client gallery</div><h1 id="clientTitle">Your memories</h1><p id="clientDescription"></p><div class="actions" id="clientActions"></div><div class="notice">Tap a photo to preview it. Use Download photo to save an image. The Drive folder may also offer original downloads.</div><div class="row"><h2>Photographs</h2><span id="photoCount" class="muted"></span></div><div id="clientStatus" class="status"></div><div id="photos" class="photos"></div></section>
+</main><footer><div class="wrap">© <span id="year"></span> Yashvi Studio · Please respect client photo privacy.</div></footer>
+<div class="lightbox" id="lightbox"><button class="btn secondary" id="closeLightbox">Close ✕</button><img id="largePhoto" alt="Photo preview"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* Replace these placeholders. Use Supabase publishable/anon key, NEVER service_role. */
+const SUPABASE_URL="PASTE_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY="PASTE_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE";
+const GOOGLE_API_KEY="PASTE_YOUR_GOOGLE_DRIVE_API_KEY_HERE";
+const ready=!SUPABASE_URL.startsWith("PASTE_")&&!SUPABASE_ANON_KEY.startsWith("PASTE_")&&window.supabase;
+const db=ready?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+const $=id=>document.getElementById(id);$("year").textContent=new Date().getFullYear();
+const params=new URLSearchParams(location.search),slugParam=params.get("gallery"),adminRoute=params.get("admin")==="1";
+function show(id){["home","login","admin","client"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function msg(id,text,type=""){const e=$(id);e.textContent=text;e.className="status "+type}
+function siteLink(slug){const u=new URL(location.href);u.search="";u.hash="";u.searchParams.set("gallery",slug);return u.toString()}
+function makeButton(text,href,secondary=false){const a=document.createElement("a");a.className="btn"+(secondary?" secondary":"");a.textContent=text;a.href=href;a.target="_blank";a.rel="noopener noreferrer";return a}
+function folderIdFromUrl(s){try{return new URL(s).pathname.match(/\/folders\/([^/]+)/)?.[1]||""}catch{return ""}}
+function clearForm(){ $("form").reset();$("recordId").value="";$("formHeading").textContent="Create a gallery";$("save").textContent="Save gallery";$("published").checked=true;msg("formStatus","")}
+$("folderUrl").addEventListener("input",()=>{const id=folderIdFromUrl($("folderUrl").value.trim());if(id)$("folderId").value=id});
+async function getSession(){if(!db)return null;return (await db.auth.getSession()).data.session}
+async function loadAdmin(){if(!ready){show("login");msg("loginStatus","Setup needed: configure Supabase URL and key in index.html.","error");return}if(!(await getSession())){show("login");return}show("admin");await listGalleries()}
+async function listGalleries(){
+ const {data,error}=await db.from("galleries").select("*").order("created_at",{ascending:false});if(error){msg("listStatus",error.message,"error");return}
+ $("galleryList").innerHTML="";$("count").textContent=(data||[]).length+" total";
+ if(!data?.length){$("galleryList").innerHTML='<div class="notice">No galleries yet. Create your first gallery above.</div>';return}
+ data.forEach(g=>{
+  const c=document.createElement("article");c.className="card";const top=document.createElement("div");top.className="row";const h=document.createElement("h3");h.textContent=g.title;const b=document.createElement("span");b.className="badge";b.textContent=g.published?"Published":"Draft";top.append(h,b);
+  const p=document.createElement("p");p.textContent=(g.subtitle||"Photo Gallery")+(g.shoot_date?" · "+g.shoot_date:"");const url=siteLink(g.slug);const u=document.createElement("div");u.className="url";u.textContent=url;
+  const acts=document.createElement("div");acts.className="actions";const copy=document.createElement("button");copy.className="btn";copy.textContent="Copy client link";copy.onclick=async()=>{try{await navigator.clipboard.writeText(url);msg("listStatus","Copied client link: "+url,"ok")}catch{prompt("Copy this link",url)}};
+  const preview=makeButton("Preview",url,true);const edit=document.createElement("button");edit.className="btn secondary";edit.textContent="Edit";edit.onclick=()=>fillForm(g);
+  const del=document.createElement("button");del.className="btn danger";del.textContent="Delete";del.onclick=async()=>{if(!confirm("Delete gallery listing for "+g.title+"? Drive photos are not deleted."))return;const r=await db.from("galleries").delete().eq("id",g.id);if(r.error)msg("listStatus",r.error.message,"error");else{msg("listStatus","Gallery deleted.","ok");listGalleries()}};
+  acts.append(copy,preview,edit,del);c.append(top,p,u,acts);$("galleryList").append(c);
+ });msg("listStatus","");
+}
+function fillForm(g){$("recordId").value=g.id;$("title").value=g.title||"";$("slug").value=g.slug||"";$("subtitle").value=g.subtitle||"";$("shootDate").value=g.shoot_date||"";$("folderUrl").value=g.folder_url||"";$("folderId").value=g.folder_id||"";$("description").value=g.description||"";$("published").checked=!!g.published;$("formHeading").textContent="Edit gallery";$("save").textContent="Update gallery";window.scrollTo({top:0,behavior:"smooth"})}
+$("signIn").onclick=async()=>{if(!db){msg("loginStatus","Configure Supabase settings in index.html first.","error");return}const email=$("email").value.trim(),password=$("password").value;if(!email||!password){msg("loginStatus","Enter email and password.","error");return}const {error}=await db.auth.signInWithPassword({email,password});if(error)msg("loginStatus",error.message,"error");else await loadAdmin()};
+$("reset").onclick=async()=>{if(!db){msg("loginStatus","Configure Supabase settings first.","error");return}const email=$("email").value.trim();if(!email){msg("loginStatus","Enter your email first.","error");return}const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname+"?admin=1"});msg("loginStatus",error?error.message:"If the account exists, a reset email has been sent.",error?"error":"ok")};
+$("signOut").onclick=async()=>{await db.auth.signOut();show("login")};$("clear").onclick=clearForm;
+$("form").onsubmit=async e=>{e.preventDefault();if(!db){msg("formStatus","Configure Supabase first.","error");return}const title=$("title").value.trim(),slug=$("slug").value.trim().toLowerCase(),folder_url=$("folderUrl").value.trim(),folder_id=$("folderId").value.trim();if(!/^[a-z0-9-]+$/.test(slug)){msg("formStatus","Link name must use lowercase letters, numbers and hyphens.","error");return}const record={title,slug,subtitle:$("subtitle").value.trim(),shoot_date:$("shootDate").value.trim(),folder_url,folder_id,description:$("description").value.trim(),published:$("published").checked};const id=$("recordId").value;const r=id?await db.from("galleries").update(record).eq("id",id):await db.from("galleries").insert(record);if(r.error){msg("formStatus",r.error.message,"error");return}msg("formStatus","Gallery saved.","ok");clearForm();await listGalleries()};
+function thumb(id){return "https://drive.google.com/thumbnail?id="+encodeURIComponent(id)+"&sz=w1600"}function download(id){return "https://drive.google.com/uc?export=download&id="+encodeURIComponent(id)}
+async function loadClient(){
+ show("client");if(!db){msg("clientStatus","Website setup is incomplete. Supabase has not been configured.","error");return}
+ const {data:g,error}=await db.from("galleries").select("title,slug,subtitle,shoot_date,folder_url,folder_id,description,published").eq("slug",slugParam).eq("published",true).maybeSingle();
+ if(error||!g){$("clientTitle").textContent="Gallery not found";$("clientDescription").textContent="Check the link shared by Yashvi Studio.";msg("clientStatus",error?.message||"This gallery is unpublished or the link is incorrect.","error");return}
+ $("clientTitle").textContent=g.title;$("clientSubtitle").textContent=g.subtitle||"Client gallery";$("clientDescription").textContent=g.description||"Your photographs, gathered in one place.";$("clientActions").append(makeButton("Open Google Drive folder ↗",g.folder_url));
+ if(!GOOGLE_API_KEY||GOOGLE_API_KEY.startsWith("PASTE_")){msg("clientStatus","Drive API key not configured. Use the folder link above for now.","error");return}
+ try{let token="",files=[];do{const u=new URL("https://www.googleapis.com/drive/v3/files");u.searchParams.set("q","'"+g.folder_id+"' in parents and trashed = false");u.searchParams.set("key",GOOGLE_API_KEY);u.searchParams.set("pageSize","1000");u.searchParams.set("orderBy","name");u.searchParams.set("fields","nextPageToken,files(id,name,mimeType)");if(token)u.searchParams.set("pageToken",token);const r=await fetch(u);if(!r.ok)throw Error("Drive API error "+r.status+". Check sharing, API enabled status and key restrictions.");const j=await r.json();files=files.concat(j.files||[]);token=j.nextPageToken||""}while(token);
+ const photos=files.filter(f=>f.mimeType?.startsWith("image/"));$("photoCount").textContent=photos.length+" photos";if(!photos.length){msg("clientStatus","No images found. Put photos directly inside the shared folder.");return}msg("clientStatus","Tap an image to preview it; use Download photo to save it.","ok");
+ photos.forEach(f=>{const c=document.createElement("article");c.className="photo";const img=document.createElement("img");img.loading="lazy";img.src=thumb(f.id);img.alt=f.name;img.onclick=()=>{$("largePhoto").src=img.src;$("lightbox").classList.add("open")};const meta=document.createElement("div");const n=document.createElement("div");n.textContent=f.name;const a=document.createElement("a");a.href=download(f.id);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Download photo ↓";meta.append(n,a);c.append(img,meta);$("photos").append(c)})
+ }catch(e){msg("clientStatus",(e.message||"Could not load photos.")+" You can still open the Drive folder.","error")}
+}
+$("closeLightbox").onclick=()=>$("lightbox").classList.remove("open");$("lightbox").onclick=e=>{if(e.target===$("lightbox"))$("lightbox").classList.remove("open")};
+(async()=>{if(slugParam){await loadClient()}else if(adminRoute){await loadAdmin()}else show("home")})();
+</script>
+</body></html>
