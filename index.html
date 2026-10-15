@@ -35,8 +35,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* Replace these placeholders. Use Supabase publishable/anon key, NEVER service_role. */
-const SUPABASE_URL="https://supabase.com/dashboard/project/bqkkdrkiijbuxuoriqaz";
-const SUPABASE_ANON_KEY="https://bqkkdrkiijbuxuoriqaz.supabase.co/rest/v1/";
+const SUPABASE_URL="https://bqkkdrkiijbuxuoriqaz.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_SDIrBf6seYP0Q3byrQciOQ_mrlzvszO";
 const GOOGLE_API_KEY="PASTE_YOUR_GOOGLE_DRIVE_API_KEY_HERE";
 const ready=!SUPABASE_URL.startsWith("PASTE_")&&!SUPABASE_ANON_KEY.startsWith("PASTE_")&&window.supabase;
 const db=ready?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
